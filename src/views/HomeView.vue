@@ -1,10 +1,4 @@
-<template>
-  <!-- <div class="home">
-    <h1>Welcome to the Home Page</h1>
-    <router-link to="/login">Login</router-link> | 
-    <router-link to="/register">Register</router-link>
-   
-  </div> -->
+<!-- <template>
   <div class="home">
     <div>
       <img src="../assets/home.jpg" class="photo" />
@@ -22,6 +16,28 @@
         <button class="register-button" @click="register">注册</button>
         <button class="login-button" @click="login">登录</button>
         <p v-if="loginErrorMessage" class="error">{{ loginErrorMessage }}</p>
+      </div>
+    </div>
+  </div>
+</template> -->
+
+<template>
+  <div class="home">
+    <div>
+      <img src="../assets/home.jpg" class="photo" />
+    </div>
+    <div class="rightTop">
+      <span>失物招领平台系统</span>
+    </div>
+    <div class="rightBottom">
+      <img src="../assets/user.png" class="userPhoto" />
+      <input v-model="registerUsername" class="user" type="text" placeholder="请输入账号" />
+      <img src="../assets/password.png" class="passPhoto" />
+      <input v-model="registerPassword" class="password" type="password" placeholder="请输入密码" />
+      <div class="button-container">
+        <button class="register-button" @click="register">注册</button>
+        <button class="login-button" @click="login">登录</button>
+        <p v-if="registerErrorMessage" class="error">{{ registerErrorMessage }}</p>
       </div>
     </div>
   </div>
@@ -47,7 +63,7 @@ export default {
         this.loginErrorMessage = "用户名和密码不能为空";
         return;
       }
-      //后端内容
+
       fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
@@ -63,6 +79,8 @@ export default {
           if (data.success) {
             this.welcomeMessage = `欢迎, ${this.loginUsername}`;
             this.loginErrorMessage = "";
+            // 保存token到本地存储
+            localStorage.setItem('token', data.token);
           } else {
             this.loginErrorMessage = "用户名或密码错误";
           }
@@ -104,6 +122,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style scoped>

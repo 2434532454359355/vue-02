@@ -7,6 +7,9 @@ import LostView from '../views/LostView.vue'
 import AnnounceView from '../views/AnnounceView.vue'
 import ManageView from '../views/ManageView.vue'
 import MessageView from '../views/MessageView.vue'
+import SubmitView from '../views/Submit.View.vue'
+import addItem from '@/components/addItem.vue'
+
 
 
 const routes = [
@@ -49,6 +52,11 @@ const routes = [
     path: '/message',
     name: 'message',
     component: MessageView
+  },
+  {
+    path: '/submit',
+    name: 'submit',
+    component: SubmitView
   },
   {
     path: '/about',

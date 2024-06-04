@@ -25,11 +25,20 @@
         <label for="time">时间:</label>
         <input type="datetime-local" id="time" v-model="form.time" required />
       </div>
+      <div>
+        <label for="category">类别:</label>
+        <select id="category" v-model="form.category" required>
+          <option value="">请选择类别</option>
+          <option value="失物">失物</option>
+          <option value="招领">招领</option>
+        </select>
+      </div>
       <button type="submit">发布招领信息</button>
     </form>
     <div v-if="submitted">
       <h3>发布的招领信息</h3>
       <img :src="form.imagePreview" alt="上传的图片" v-if="form.imagePreview"/>
+      <p><strong>类别:</strong> {{ form.category }}</p>
       <p><strong>主题:</strong> {{ form.title }}</p>
       <p><strong>简述:</strong> {{ form.description }}</p>
       <p><strong>联系方式:</strong> {{ form.contact }}</p>
@@ -38,6 +47,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -49,7 +59,8 @@ export default {
         description: '',
         contact: '',
         location: '',
-        time: ''
+        time: '',
+        category: '' // 添加类别字段
       },
       submitted: false
     };
@@ -61,23 +72,28 @@ export default {
       this.form.imagePreview = URL.createObjectURL(file);
     },
     submitForm() {
-      if (this.form.image && this.form.title && this.form.description && this.form.contact && this.form.location && this.form.time) {
+      if (this.form.image && this.form.title && this.form.description && this.form.contact && this.form.location && this.form.time && this.form.category) {
         this.submitted = true;
         console.log("Form submitted:", this.form);
         // 在这里你可以添加提交到服务器的逻辑
       } else {
         alert('请填写所有必填项');
       }
+      // 在提交完成后，弹出消息
+      alert('提交成功！');
+      // 返回上一页
+      this.$router.go(-1);
     }
   }
 };
 </script>
+
 <style scoped>
 .lost-and-found {
   position: absolute;
-  top:10%;
-  left:30%;
-  width:40%;
+  top: 10%;
+  left: 30%;
+  width: 40%;
 }
 
 form {
@@ -94,7 +110,7 @@ label {
   font-weight: bold;
 }
 
-input, textarea {
+input, textarea, select {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
